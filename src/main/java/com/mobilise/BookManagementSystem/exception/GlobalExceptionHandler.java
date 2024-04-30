@@ -34,14 +34,48 @@ public class GlobalExceptionHandler {
                 HttpStatus.BAD_REQUEST);
     }
 
-    // Handling custom BookCreationException
+    // Handling global BookCreationException
     @ExceptionHandler(BookCreationException.class)
     public ResponseEntity<ApiResponse> handleBookCreationException(BookCreationException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(buildErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST));
     }
-    // Handling custom NotFoundException
+    // Handling global NotFoundException
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ApiResponse> handleNotFoundException(NotFoundException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(buildErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST));
+    }
+    // Handling global AlreadyExistsException
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<ApiResponse> handleAlreadyExistsException(AlreadyExistsException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(buildErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST));
+    }
+    // Handling global ValidTitleException
+    @ExceptionHandler(ValidTitleException.class)
+    public ResponseEntity<ApiResponse> handleValidTitleException(ValidTitleException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(buildErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST));
+    }
+
+    // Handling global ValidAuthorException
+    @ExceptionHandler(ValidAuthorException.class)
+    public ResponseEntity<ApiResponse> handleValidAuthorException(ValidAuthorException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(buildErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST));
+    }
+
+    // Handling global ValidPublicationYearException
+    @ExceptionHandler(ValidPublicationYearException.class)
+    public ResponseEntity<ApiResponse> handleValidPublicationYearException(ValidPublicationYearException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(buildErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST));
+    }
+
+    // Handling global TitleRequiredException
+    @ExceptionHandler(TitleRequiredException.class)
+    public ResponseEntity<ApiResponse> handleTitleRequiredException(TitleRequiredException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(buildErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST));
+    }
+
+    //Handling global AuthorRequiredException
+    @ExceptionHandler(AuthorRequiredException.class)
+    public ResponseEntity<ApiResponse> handleAuthorRequiredException(AuthorRequiredException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(buildErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST));
     }
 

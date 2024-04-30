@@ -14,7 +14,7 @@ public class ApiResponseUtils {
 
     public static ApiResponse buildErrorResponse(Object d, HttpStatus status) {
         return ApiResponse.builder()
-                .message("error")
+                .message("Error Occurred:")
                 .status(status)
                 .data(d)
                 .build();
