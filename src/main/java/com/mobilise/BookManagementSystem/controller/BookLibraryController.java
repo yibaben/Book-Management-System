@@ -5,6 +5,7 @@ import com.mobilise.BookManagementSystem.dto.response.ApiResponse;
 import com.mobilise.BookManagementSystem.dto.response.BookResponse;
 import com.mobilise.BookManagementSystem.dto.response.PaginatedBookResponse;
 import com.mobilise.BookManagementSystem.service.BookServices;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,11 @@ import static com.mobilise.BookManagementSystem.util.ApiResponseUtils.buildSucce
 public class BookLibraryController {
     private final BookServices bookServices;
 
+    @Operation(
+            summary = "Add New Book REST API",
+            description = "This REST API is used to Add a New Book to a Database"
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "HTTP Status 200 OK")
     @PostMapping("/add")
     public ResponseEntity<ApiResponse> addNewBook(@RequestBody BookRequest bookRequest) {
             BookResponse response = bookServices.addNewBook(bookRequest);
