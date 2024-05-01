@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Year;
 import java.util.List;
 
 import static com.mobilise.BookManagementSystem.util.ApiResponseUtils.buildSuccessResponse;
@@ -63,15 +64,26 @@ public class BookLibraryController {
         }
 
     @Operation(
-            summary = "Search Books by Title/Author/ISBN/Publication Year REST API",
-            description = "This REST API is used to Search Books by Title, Author, ISBN, or Publication Year"
+            summary = "Search Books by Title or Author or ISBN REST API",
+            description = "This REST API is used to Search Books by Title, Author or ISBN"
     )
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "HTTP Status 200 OK")
     @GetMapping("/search/by/searchText/{searchText}")
-    public ResponseEntity<ApiResponse> getContributorBySearchParam(@PathVariable String searchText) {
-            List<BookResponse> response = bookServices.searchBookByTitleOrAuthorOrIsbnOrPublisherYear(searchText);
+    public ResponseEntity<ApiResponse> searchBookByTitleOrAuthorOrIsbn(@PathVariable String searchText) {
+            List<BookResponse> response = bookServices.searchBookByTitleOrAuthorOrIsbn(searchText);
             return ResponseEntity.status(HttpStatus.OK).body(buildSuccessResponse(response, HttpStatus.OK));
         }
+
+    @Operation(
+            summary = "Search Books by Publication Year REST API",
+            description = "This REST API is used to Search Books by Publication Year"
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "HTTP Status 200 OK")
+    @GetMapping("search/by/publicationYear/{publicationYear}")
+    public ResponseEntity<ApiResponse> searchBookByPublicationYear(@PathVariable Year publicationYear) {
+        List<BookResponse> response = bookServices.searchBookByPublicationYear(publicationYear);
+        return ResponseEntity.status(HttpStatus.OK).body(buildSuccessResponse(response, HttpStatus.OK));
+    }
 
     @Operation(
             summary = "Update Book Details by ID REST API",

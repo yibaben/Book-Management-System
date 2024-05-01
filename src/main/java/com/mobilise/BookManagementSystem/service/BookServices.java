@@ -5,6 +5,7 @@ import com.mobilise.BookManagementSystem.dto.response.ApiResponse;
 import com.mobilise.BookManagementSystem.dto.response.BookResponse;
 import com.mobilise.BookManagementSystem.dto.response.PaginatedBookResponse;
 
+import java.time.Year;
 import java.util.List;
 
 public interface BookServices {
@@ -16,7 +17,8 @@ public interface BookServices {
     // Search
     BookResponse getBookById(Long id);
     // Search
-    List<BookResponse> searchBookByTitleOrAuthorOrIsbnOrPublisherYear(String searchText);
+    List<BookResponse> searchBookByTitleOrAuthorOrIsbn(String searchText);
+    List<BookResponse> searchBookByPublicationYear(Year publicationYear);
     // Update
     BookResponse updateBook(Long id, BookRequest bookRequest);
     // Delete

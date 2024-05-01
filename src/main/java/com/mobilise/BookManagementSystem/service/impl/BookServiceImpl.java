@@ -86,12 +86,10 @@ public class BookServiceImpl implements BookServices {
             Pageable pageable = PageRequest.of(pageNo, pageSize);
             Page<BookLibrary> bookList = bookRepository.findAll(pageable);
             log.info("Book List successfully retrieved with Pagination");
-
             // Map and return PaginatedBookResponse
             List<BookResponse> collect = bookList.stream()
                     .map(bookMapper::mapBookLibraryToBookResponse)
                     .collect(Collectors.toList());
-
             return PaginatedBookResponse.builder()
                     .contents(collect)
                     .pageElementCount(bookList.getNumberOfElements())
@@ -128,48 +126,57 @@ public class BookServiceImpl implements BookServices {
     }
 
     /**
-     * This is a method that searches for books by title, author, ISBN, or publication year in a book library.
-     * It first tries to parse the search text as a year and checks if the year exists in the database.
-     * If it does, it retrieves the books by the publication year; otherwise, it searches by title, author, and ISBN.
+     * This is a method that searches for books by title, author, ISBN  in a book library.
+     * It takes a String parameter, searchText, and it searches by title, author, or ISBN.
      * It then maps the results to a list of BookResponse objects and returns them.
      * If no books are found, it throws a NotFoundException.
-     *
      * @param  searchText    the text to search for in the database
      * @return              a list of BookResponse objects containing the search results
      */
     @Override
-    public List<BookResponse> searchBookByTitleOrAuthorOrIsbnOrPublisherYear(String searchText) {
+    public List<BookResponse> searchBookByTitleOrAuthorOrIsbn(String searchText) {
         try {
             // Retrieve Book entity by SearchText
-            List<BookLibrary> book;
-            Year publicationYear = null;
-            try {
-                publicationYear = Year.parse(searchText);
-                // Check if the publicationYear exists in the database
-                boolean yearExists = bookRepository.existsByPublicationYear(publicationYear);
-                if (yearExists) {
-                    // Handling cases where searchText is a valid Year
-                    book = bookRepository.searchByTitleOrAuthorOrIsbnOrPublicationYear(null, null, null, publicationYear);
-                } else {
-                    // Throw exception if publicationYear does not exist in the database
-                    throw new NotFoundException("Book with search text " + searchText + " does not exist");
-                }
-            } catch (Exception e) {
-                // Handling cases where searchText is not a valid Year
-                book = bookRepository.searchByTitleOrAuthorOrIsbnOrPublicationYear(searchText, searchText, searchText, null);
-            }
-//            List<BookLibrary> book = bookRepository.searchByTitleOrAuthorOrIsbnOrPublicationYear(searchText, searchText, searchText, Year.parse(searchText));
+            List<BookLibrary> book = bookRepository.searchByTitleOrAuthorOrIsbn(searchText, searchText, searchText);
+            // Map and return BookResponse
             List<BookResponse> bookResponses = new ArrayList<>();
             for (BookLibrary bookLibrary : book) {
                 BookResponse response = modelMapper.map(bookLibrary, BookResponse.class);
                 bookResponses.add(response);
             }
+            // Check if Book exists
             if (!bookResponses.isEmpty()) {
                 log.info("Book successfully retrieved from search text: " + searchText);
                 return bookResponses;
             }
             else {
                 throw new NotFoundException("Book with search text " + searchText + " does not exist");
+            }
+        }catch (Exception ex) {
+            // Log the specific exception details
+            log.error("Error while searching Book: {}", ex.getMessage());
+            throw new NotFoundException("Error Occurred while searching Book: " + ex.getMessage());
+        }
+    }
+
+    @Override
+    public List<BookResponse> searchBookByPublicationYear(Year publicationYear) {
+        try {
+            // Retrieve Book entity by SearchText
+            List<BookLibrary> book = bookRepository.findAllBooksByPublicationYear(publicationYear);
+            // Map and return BookResponse
+            List<BookResponse> bookResponses = new ArrayList<>();
+            for (BookLibrary bookLibrary : book) {
+                BookResponse response = modelMapper.map(bookLibrary, BookResponse.class);
+                bookResponses.add(response);
+            }
+            // Check if Book exists
+            if (!bookResponses.isEmpty()) {
+                log.info("Book successfully retrieved by publication year: " + publicationYear);
+                return bookResponses;
+            }
+            else {
+                throw new NotFoundException("Book with publication year " + publicationYear + " Not Found");
             }
         }catch (Exception ex) {
             // Log the specific exception details

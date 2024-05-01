@@ -23,33 +23,29 @@ public interface BookRepository extends JpaRepository<BookLibrary, Long> {
     Optional<BookLibrary> findBookByTitleIgnoreCase(String bookTitle);
 
     /**
-     * Checks if a book exists by the given publication year.
-     * It declares a boolean method called existsByPublicationYear that takes a parameter of type Year named publicationYear.
-     * The purpose of this method is to check if a book with the given publication year already exists in the repository.
-     * It returns true if a book with the given publication year exists, and false otherwise.
-     * @param  publicationYear  the publication year to check for
-     * @return                  true if a book exists with the given publication year, false otherwise
+     * Find all books in the library by publication year.
+     * This is a query that finds all books in a library based on their publication year.
+     * The method takes the publication year as input and returns a list of BookLibrary objects
+     * that match the provided publication year.
+     * @param  publicationYear   the year of publication to search for
+     * @return                   a list of BookLibrary objects matching the publication year
      */
-    boolean existsByPublicationYear(Year publicationYear);
+    List<BookLibrary> findAllBooksByPublicationYear(Year publicationYear);
+
 
     /**
      * This Query defines a method that searches for books in a library based on the input parameters
-     * such as title, author, ISBN, and publication year.
+     * such as title, author, and ISBN.
      * The method uses a SQL-like query to filter books by matching the input parameters with the
      * corresponding fields in the database.
      * @param  title    parameter used to search for books by title
      * @param  author  parameter used to search for books by author
      * @param  isbn    parameter used to search for books by ISBN
-     * @param  publicationYear  parameter used to search for books by publication year
      * @return  a list of books that match the search criteria
      */
     @Query("SELECT ic FROM BookLibrary ic WHERE LOWER(ic.title) LIKE CONCAT('%', COALESCE(LOWER(:title), ''), '%') " +
             "OR LOWER(ic.author) LIKE CONCAT('%', COALESCE(LOWER(:author), ''), '%') " +
-            "OR LOWER(ic.isbn) LIKE CONCAT('%', COALESCE(LOWER(:isbn), ''), '%') " +
-            "OR ic.publicationYear = :publicationYear")
-    List<BookLibrary> searchByTitleOrAuthorOrIsbnOrPublicationYear(@Param("title") String title,
-                                                          @Param("author") String author,
-                                                          @Param("isbn") String isbn,
-                                                          @Param("publicationYear") Year publicationYear);
+            "OR LOWER(ic.isbn) LIKE CONCAT('%', COALESCE(LOWER(:isbn), ''), '%')")
+    List<BookLibrary> searchByTitleOrAuthorOrIsbn(@Param("title") String title, @Param("author") String author, @Param("isbn") String isbn);
 
 }
