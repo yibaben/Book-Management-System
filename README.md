@@ -126,7 +126,7 @@ Development of a simple RESTful web service using Java and Spring Boot for a boo
 }
 ```
 
-### Search books by title or author or ISBN or publicationYear
+### Search books by title or author or ISBN
 - Endpoint: `http://localhost:8000/api/v1/book/search/by/searchText/HERO`
 - Method: `GET`
 - Path Variable: `searchText` (Text to search for)
@@ -144,6 +144,36 @@ Development of a simple RESTful web service using Java and Spring Boot for a boo
             "isbn": "ISBN12345",
             "quantity": 10,
             "publicationYear": "2012"
+        }
+    ]
+}
+```
+### Search books by publication year
+- Endpoint: `http://localhost:8000/api/v1/book/search/by/publicationYear/2020`
+- Method: `GET`
+- Path Variable: `publicationYear` (Year to search for)
+- Response: List of `BookResponse` objects
+```json
+{
+    "message": "successful",
+    "status": "OK",
+    "dateTime": "2024-05-01T23:02:06.850641",
+    "data": [
+        {
+            "id": 2,
+            "title": "Mobilise HERO Nigeria",
+            "author": "J.J Bennett",
+            "isbn": "ISBN12345",
+            "quantity": 10,
+            "publicationYear": "2020"
+        },
+        {
+            "id": 3,
+            "title": "Mobilise 100Plus Success",
+            "author": "J.J Bennett",
+            "isbn": "ISBN12345",
+            "quantity": 10,
+            "publicationYear": "2020"
         }
     ]
 }
