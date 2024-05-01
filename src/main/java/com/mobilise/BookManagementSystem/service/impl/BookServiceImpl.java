@@ -1,4 +1,4 @@
-package com.mobilise.BookManagementSystem.service;
+package com.mobilise.BookManagementSystem.service.impl;
 
 import com.mobilise.BookManagementSystem.dto.request.BookRequest;
 import com.mobilise.BookManagementSystem.dto.response.ApiResponse;
@@ -7,6 +7,7 @@ import com.mobilise.BookManagementSystem.dto.response.PaginatedBookResponse;
 import com.mobilise.BookManagementSystem.entity.BookLibrary;
 import com.mobilise.BookManagementSystem.exception.*;
 import com.mobilise.BookManagementSystem.repository.BookRepository;
+import com.mobilise.BookManagementSystem.service.BookServices;
 import com.mobilise.BookManagementSystem.service.mapper.BookMapper;
 import com.mobilise.BookManagementSystem.validator.BookInfoValidations;
 import lombok.RequiredArgsConstructor;

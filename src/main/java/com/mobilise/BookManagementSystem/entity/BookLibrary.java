@@ -24,7 +24,6 @@ public class BookLibrary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-//    @NotEmpty(message = "Title is required")
     @Column(unique = true, nullable = false)
     private String title;
     @Column(nullable = false)
@@ -32,7 +31,6 @@ public class BookLibrary {
     private String isbn;
     private Integer quantity;
     @Column(nullable = false)
-//    @PastOrPresent(message = "Publication year must be in the past or present")
     private Year publicationYear;
     @CreationTimestamp
     private LocalDateTime createdDate;

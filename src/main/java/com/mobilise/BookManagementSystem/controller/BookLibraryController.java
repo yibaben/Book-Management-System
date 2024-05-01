@@ -41,29 +41,54 @@ public class BookLibraryController {
             return ResponseEntity.status(HttpStatus.OK).body(buildSuccessResponse(response, HttpStatus.OK));
         }
 
+    @Operation(
+            summary = "Get All Books with Pagination REST API",
+            description = "This REST API is used to Retrieve All Books with Pagination"
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "HTTP Status 200 OK")
     @GetMapping("/get/all")
     public ResponseEntity<ApiResponse> getAllBooksWithPagination(@RequestParam(defaultValue = "0") int pageNo, @RequestParam(defaultValue = "10") int pageSize) {
             PaginatedBookResponse response = bookServices.getAllBooksWithPagination(pageNo, pageSize);
             return ResponseEntity.status(HttpStatus.OK).body(buildSuccessResponse(response, HttpStatus.OK));
         }
+    @Operation(
+            summary = "Get Book by ID REST API",
+            description = "This REST API is used to Retrieve a Book by ID"
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "HTTP Status 200 OK")
         @GetMapping("/get/by/id/{id}")
         public ResponseEntity<ApiResponse> getBookById(@PathVariable Long id) {
             BookResponse response = bookServices.getBookById(id);
             return ResponseEntity.status(HttpStatus.OK).body(buildSuccessResponse(response, HttpStatus.OK));
         }
 
+    @Operation(
+            summary = "Search Books by Title/Author/ISBN/Publication Year REST API",
+            description = "This REST API is used to Search Books by Title, Author, ISBN, or Publication Year"
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "HTTP Status 200 OK")
     @GetMapping("/search/by/searchText/{searchText}")
     public ResponseEntity<ApiResponse> getContributorBySearchParam(@PathVariable String searchText) {
             List<BookResponse> response = bookServices.searchBookByTitleOrAuthorOrIsbnOrPublisherYear(searchText);
             return ResponseEntity.status(HttpStatus.OK).body(buildSuccessResponse(response, HttpStatus.OK));
         }
 
+    @Operation(
+            summary = "Update Book Details by ID REST API",
+            description = "This REST API is used to Update Book Details by ID"
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "HTTP Status 200 OK")
     @PutMapping("/update/by/id/{id}")
     public ResponseEntity<ApiResponse> updateBookDetails(@PathVariable Long id, @Valid @RequestBody BookRequest updateRequest) {
             BookResponse response = bookServices.updateBook(id, updateRequest);
             return ResponseEntity.status(HttpStatus.OK).body(buildSuccessResponse(response, HttpStatus.OK));
         }
 
+    @Operation(
+            summary = "Delete Book by ID REST API",
+            description = "This REST API is used to Delete a Book by ID"
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "HTTP Status 200 OK")
     @DeleteMapping("/delete/by/id/{id}")
     public ResponseEntity<ApiResponse> deleteBookById(@PathVariable Long id) {
         ApiResponse response = bookServices.deleteBookById(id);

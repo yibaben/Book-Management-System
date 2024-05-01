@@ -46,7 +46,6 @@ public interface BookRepository extends JpaRepository<BookLibrary, Long> {
     @Query("SELECT ic FROM BookLibrary ic WHERE LOWER(ic.title) LIKE CONCAT('%', COALESCE(LOWER(:title), ''), '%') " +
             "OR LOWER(ic.author) LIKE CONCAT('%', COALESCE(LOWER(:author), ''), '%') " +
             "OR LOWER(ic.isbn) LIKE CONCAT('%', COALESCE(LOWER(:isbn), ''), '%') " +
-//            "OR ic.publicationYear LIKE CONCAT('%', COALESCE(:publicationYear, ic.publicationYear), '%') ")
             "OR ic.publicationYear = :publicationYear")
     List<BookLibrary> searchByTitleOrAuthorOrIsbnOrPublicationYear(@Param("title") String title,
                                                           @Param("author") String author,
