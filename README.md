@@ -34,7 +34,6 @@ Development of a simple RESTful web service using Java and Spring Boot for a boo
 ### Create a new book
 - Endpoint: `http://localhost:8000/api/v1/book/add`
 - Method: `POST`
-- Request Body: 
 - Request Body: `BookRequest` object
 ```json
 {
@@ -127,7 +126,7 @@ Development of a simple RESTful web service using Java and Spring Boot for a boo
 }
 ```
 
-### Search books by title or author
+### Search books by title or author or ISBN or publicationYear
 - Endpoint: `http://localhost:8000/api/v1/book/search/by/searchText/HERO`
 - Method: `GET`
 - Path Variable: `searchText` (Text to search for)
