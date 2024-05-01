@@ -17,7 +17,7 @@ Development of a simple RESTful web service using Java and Spring Boot for a boo
 - I Implemented pagination for the "Retrieve all books" feature.
 
 ## Technical Specifications
-- I used Java 21.
+- I used Java 21 and spring boot version: 3.2.5 
 - The application was  built using Spring Boot.
 - For database access, I use Spring Data JPA and H2 in-memory database for data storage.
 - I Include validation checks. For instance, a book should have a valid title, author, and publication year based on the criteria I defined.
