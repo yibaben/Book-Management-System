@@ -1,11 +1,6 @@
 package com.mobilise.BookManagementSystem.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +10,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 import java.time.Year;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -36,4 +30,13 @@ public class BookLibrary {
     private LocalDateTime createdDate;
     @UpdateTimestamp
     private LocalDateTime updatedDate;
+
+    public BookLibrary(Long id, String title, String author, String isbn, Integer quantity, Year publicationYear) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.isbn = isbn;
+        this.quantity = quantity;
+        this.publicationYear = publicationYear;
+    }
 }

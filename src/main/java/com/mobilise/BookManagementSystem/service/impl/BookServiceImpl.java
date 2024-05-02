@@ -16,8 +16,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
@@ -205,18 +207,18 @@ public class BookServiceImpl implements BookServices {
                 // Validate inputs
                 bookInfoValidations.isBookTitleAlreadyExists(bookRequest.getTitle());
                 // Update BookLibrary entity with new values
-                if (bookRequest.getTitle() != null) {
+                if (bookRequest.getTitle() != null && !bookRequest.getTitle().equals(updatedBook.getTitle())) {
                     bookInfoValidations.validateTitle(bookRequest.getTitle());
                     updatedBook.setTitle(bookRequest.getTitle());
                 }
-                if (bookRequest.getAuthor() != null) {
+                if (bookRequest.getAuthor() != null && !bookRequest.getAuthor().equals(updatedBook.getAuthor())) {
                     bookInfoValidations.validateAuthor(bookRequest.getAuthor());
                     updatedBook.setAuthor(bookRequest.getAuthor());
                 }
                 if (bookRequest.getIsbn() != null) {
                     updatedBook.setIsbn(bookRequest.getIsbn());
                 }
-                if (bookRequest.getPublicationYear() != null) {
+                if (bookRequest.getPublicationYear() != null && !bookRequest.getPublicationYear().equals(updatedBook.getPublicationYear())) {
                     bookInfoValidations.validatePublicationYear(bookRequest.getPublicationYear());
                     updatedBook.setPublicationYear(bookRequest.getPublicationYear());
                 }
@@ -256,6 +258,9 @@ public class BookServiceImpl implements BookServices {
             log.error("Error while deleting Book: {}", ex.getMessage());
             throw new NotFoundException("Error Occurred while deleting Book: " + ex.getMessage());
         }
-        return new ApiResponse();
+        return ApiResponse.builder()
+                .status(HttpStatus.OK)
+                .dateTime(LocalDateTime.now())
+                .build();
     }
 }
